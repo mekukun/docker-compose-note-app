@@ -22,7 +22,7 @@ const Addnotes = () => {
         <form
           className="form-action"
           method="POST"
-          action="http://localhost:5000/api/add"
+          action="http://localhost:8080/api/add"
         >
           <div className="holder">
             <label>Enter note</label>

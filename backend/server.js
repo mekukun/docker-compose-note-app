@@ -18,8 +18,7 @@ app.route("/")
         res.send("<h1>This is the server for note taking app</h1>")
     })
 
-app.listen(5000,(err)=>{
-    if(err) {console.log(err)}
-    else {console.log(`listening at 5000`)}
-})
+app.listen(8080, '0.0.0.0', () => {
+    console.log('Server is running on port 8080');
+});
 

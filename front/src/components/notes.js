@@ -8,7 +8,7 @@ const Notes = () => {
     const [isloading,setisloading] = useState(true)
     const [titled,settitled] = useState('');
     useEffect(()=>{
-        fetch("http://localhost:5000/api/all")
+        fetch("http://localhost:8080/api/all")
             .then(resp=>resp.json())
                 .then(data=>{
                     console.log(data)
@@ -19,7 +19,7 @@ const Notes = () => {
 
     const delpost = (id,dataid) => {
         console.log(id);
-        fetch(`http://localhost:5000/api/del/${dataid}`,{
+        fetch(`http://localhost:8080/api/del/${dataid}`,{
             method:'delete',
             headers:{
             'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ const Notes = () => {
     const updatepost = (id,dataid) => {
         let ti=prompt();
         settitled(ti);
-        fetch(`http://localhost:5000/api/add/${dataid}/${ti}`,{
+        fetch(`http://localhost:8080/api/add/${dataid}/${ti}`,{
             method:'put',
             headers:{
             'Content-Type': 'application/json',
@@ -61,7 +61,6 @@ const Notes = () => {
         
     }
 
-    console.log(`nit's val ${nit}`)
     return(
         <Fragment>
         <h2 class="hg">My Notes</h2>    
