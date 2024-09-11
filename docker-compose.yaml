@@ -1,5 +1,6 @@
 services:
   backend:
+    restart: unless-stopped
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -8,28 +9,38 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   frontend:
+    restart: unless-stopped
     build:
       context: ./front
       dockerfile: Dockerfile
     ports:
       - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
   
   db:
     image: mysql
     container_name: note-db
-    restart: always                       # always restart
+    restart: unless-stopped           # always restart
     environment:
-      MYSQL_DATABASE: 'collection'        # name of database
+      MYSQL_DATABASE: 'collection'    # name of database
       MYSQL_ROOT_PASSWORD: 'root'     # password for root user
-    ports:
-      - '3306:3306'                       # host port 3306 is mapper to docker port 3306
+    expose:                           # expose port to other container within the docker compose net, but not publish to host
+      - "3306"
     volumes:
       - mysql-db:/var/lib/mysql
       - .docker/setup.sql:/docker-entrypoint-initdb.d/setup.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
       timeout: 5s
       retries: 10
 

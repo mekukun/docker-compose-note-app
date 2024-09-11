@@ -11,8 +11,3 @@ CREATE TABLE IF NOT EXISTS `notes` (
 	PRIMARY KEY (`id`)
 )
 COLLATE='utf8mb4_0900_ai_ci';
-
--- create the users for each database
-update mysql.user set host='%' where user='root'
-
-flush privileges;
